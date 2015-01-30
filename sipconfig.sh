@@ -38,7 +38,7 @@ done
 
 #Function to get the default gateway
 default_gw(){
-local DF_GW=$(ip route | grep default | awk '{ print $3,">>>",$5 }')
+local DF_GW=$(ip route | awk '/default/ { print $3,">>>",$5 }')
 if [ "$DF_GW" == "" ]
   then
     echo -e ""$rojo"Default Gateway not defined"$colorbase""
@@ -49,7 +49,7 @@ fi
 
 #Function to get the DNS nameservers stored in /etc/resolv.conf
 nameservers(){
-local DNS_SERVERS=$(cat /etc/resolv.conf | grep nameserver | awk '{ print $2 }')
+local DNS_SERVERS=$(cat /etc/resolv.conf | awk '/nameserver/ { print $2 }')
 if [ "$DNS_SERVERS" == "" ]
   then
     echo -e ""$rojo"DNS servers not defined"$colorbase""
