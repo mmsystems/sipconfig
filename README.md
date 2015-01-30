@@ -8,6 +8,7 @@ $chmod u+x sipconfig.sh
 $./sipconfig.sh
 
 To install it, and only put sipconfig as a common command:
+
 $cp sipconfig.sh /usr/bin/sipconfig
 $chmod +x /usr/bin/sipconfig
 
