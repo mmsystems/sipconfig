@@ -27,3 +27,5 @@ wlan2	192.168.0.148	[ HOME_WIFI ]
   DNS Servers                       
 DNS1: 8.8.8.8
 DNS2: 8.8.4.4
+
+![sipconfig screenshoot](https://github.com/mmsystems/sipconfig/raw/master/sipconfig.png)
