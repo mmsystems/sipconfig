@@ -19,16 +19,14 @@ interfaces_ip(){
 local IFACES=$(netstat -i | tail -n+3 | awk '{ print $1 }')
 for i in $IFACES
   do
-    IP_IFACE=$(ifconfig $i | grep 'Direc. inet\|inet addr' | awk '{ print $2 }' | awk -F: '{ print $2 }')
+    local IP_IFACE=$(ifconfig $i | grep 'Direc. inet\|inet addr' | awk '{ print $2 }' | awk -F: '{ print $2 }')
     if [ "$IP_IFACE" == "" ]
       then
-        IP_IFACE="<IP UNASSIGNED>"
+        local IP_IFACE=""$rojo"<UNASSIGNED>"
     fi
-    WIFI_CONNECTION=$(iwgetid -s $i)
-    if [ "$WIFI_CONNECTION" == "" ]
+    local WIFI_CONNECTION=$(iwgetid -s $i)
+    if [ "$WIFI_CONNECTION" != "" ]
       then
-        WIFI_CONNECTION=""
-      else
         WIFI_CONNECTION=""$rojoC"[ "$verdeC"$WIFI_CONNECTION "$rojoC"]"$colorbase""
     fi
     #Print ifaces results
@@ -63,6 +61,45 @@ if [ "$DNS_SERVERS" == "" ]
 fi
 }
 
+internet_communication(){
+#Check ping to IP
+ping -s 0 -c 1 -W 1 8.8.8.8 > /dev/null 2>&1
+if [ "$?" == "0" ]
+  then
+    PING_STATUS="YES"
+  else
+    PING_STATUS="NO"
+fi
+#Check ping to DNS name
+ping -s 0 -c 1 -W 1 google.com > /dev/null 2>&1
+if [ "$?" == "0" ]
+  then
+    DNS_STATUS="YES"
+  else
+    DNS_STATUS="NO"
+fi
+
+if [ "$PING_STATUS" == "YES" ]
+  then
+    COLOR_P=""$verdeC""
+  else
+    COLOR_P=""$rojoC""
+fi
+if [ "$DNS_STATUS" == "YES" ]
+  then
+    COLOR_D=""$verdeC""
+  else
+    COLOR_D=""$rojoC""
+fi
+if [ "$PING_STATUS" == "YES" ] && [ "$DNS_STATUS" == "YES" ]
+  then
+    EXT_IP=""$azulC"External IP: "$blanco"$(wget -q -O- ident.me)"$colorbase""
+fi
+echo -e ""$azulC"Internet connection: "$COLOR_P"$PING_STATUS"$colorbase""
+echo -e ""$azulC"DNS name resolution: "$COLOR_D"$DNS_STATUS"$colorbase""
+echo -e "$EXT_IP"
+}
+
 ##################
 ## MAIN PROGRAM ##
 ##################
@@ -73,4 +110,12 @@ echo -e "\n"$resaltar""$amarillo"  Default Gateway                   "$colorbase
 default_gw
 echo -e "\n"$resaltar""$amarillo"  DNS Servers                       "$colorbase""
 nameservers
+
+#Only check internet connection if -c flag is set
+if [ "$1" == "-c" ]
+  then
+    echo -e "\n"$resaltar""$amarillo"  Internet Communication            "$colorbase""
+    internet_communication
+fi
 echo -e "\n"
+
