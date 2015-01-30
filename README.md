@@ -13,7 +13,7 @@ $chmod +x /usr/bin/sipconfig
 
 
 <b>Output example:</b><br>
-![sipconfig screenshoot](/sipconfig/raw/master/img/sipconfig.png)
+![sipconfig screenshoot](https://github.com/mmsystems/sipconfig/raw/master/img/sipconfig.png)
 
 - All active interfaces IP's.
 - If a wifi interface is present and connected, show AP name.
