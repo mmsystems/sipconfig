@@ -104,6 +104,25 @@ echo -e "$EXT_IP"
 ## MAIN PROGRAM ##
 ##################
 
+#Run in loop mode
+if [ "$1" == "-l" ]
+  then
+    if [ "$2" != "" ]
+      then
+        TIME_TO_SLEEP=$2
+      else
+        #Default time to sleep
+        TIME_TO_SLEEP=10
+    fi
+    while [ true ]
+      do
+        clear
+        echo -e ""$rojoC"\tPress CTRL+C to EXIT"$colorbase""
+        $0 -c
+        sleep $TIME_TO_SLEEP
+    done
+fi
+
 echo -e "\n"$resaltar""$amarillo"  Active Interfaces                 "$colorbase""
 interfaces_ip
 echo -e "\n"$resaltar""$amarillo"  Default Gateway                   "$colorbase""
