@@ -1,18 +1,20 @@
 # sipconfig
 SIPCONFIG: bash script to get simple IP/Network information
 
-You can execute this script as follows:
+<b>You can execute this script as follows:</b>
+
 $bash sipconfig.sh
 or
 $chmod u+x sipconfig.sh
 $./sipconfig.sh
 
-To install it, and only put sipconfig as a common command:
+<b>To install it, and only put sipconfig as a common command:</b>
 
 $cp sipconfig.sh /usr/bin/sipconfig
 $chmod +x /usr/bin/sipconfig
 
-Output example:
+
+<b>Output example:</b>
 
   Active Interfaces                 
 eth0	192.168.2.2	
