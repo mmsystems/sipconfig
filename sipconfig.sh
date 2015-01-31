@@ -109,7 +109,13 @@ if [ "$1" == "-l" ]
   then
     if [ "$2" != "" ]
       then
-        TIME_TO_SLEEP=$2
+        if [ "$2" -le "1" ] || [ "$2" -gt "3600" ]
+          then
+            echo "ERROR, -l must be about 1 and 3600 seconds"
+            exit 1
+          else
+            TIME_TO_SLEEP=$2
+        fi
       else
         #Default time to sleep
         TIME_TO_SLEEP=10
