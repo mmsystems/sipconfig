@@ -19,15 +19,18 @@ interfaces_ip(){
 local IFACES=$(netstat -i | tail -n+3 | awk '{ print $1 }')
 for i in $IFACES
   do
-    local IP_IFACE=$(ifconfig $i | grep 'Direc. inet\|inet addr' | awk '{ print $2 }' | awk -F: '{ print $2 }')
+    local IP_IFACE=$(ifconfig $i | grep 'Direc. inet\|inet addr\|inet ' | awk '{ print $2 }')
     if [ "$IP_IFACE" == "" ]
       then
         local IP_IFACE=""$rojo"<UNASSIGNED>"
     fi
-    local WIFI_CONNECTION=$(iwgetid -s $i)
-    if [ "$WIFI_CONNECTION" != "" ]
+    if command -v iwgetid &> /dev/null
       then
-        WIFI_CONNECTION=""$rojoC"[ "$verdeC"$WIFI_CONNECTION "$rojoC"]"$colorbase""
+        local WIFI_CONNECTION=$(iwgetid -s $i)
+        if [ "$WIFI_CONNECTION" != "" ]
+          then
+            WIFI_CONNECTION=""$rojoC"[ "$verdeC"$WIFI_CONNECTION "$rojoC"]"$colorbase""
+        fi
     fi
     #Print ifaces results
     echo -e ""$azulC"$i\t"$blanco"$IP_IFACE"$colorbase"\t$WIFI_CONNECTION"
